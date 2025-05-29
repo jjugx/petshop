@@ -1,0 +1,199 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id     Int       @id @default(autoincrement())
+  username    String
+  password    String
+  email       String    @unique
+  firstname   String
+  lastname    String
+  phone       String?
+  address     String?
+  role        String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  orders      Order[]
+  cart        Cart[]
+  payments    Payment[]
+  reviews     Review[]
+}
+
+model Product {
+  product_id     Int       @id @default(autoincrement())
+  name           String
+  description    String
+  price          Float
+  stock_quantity Int
+  category_id    Int
+  brand_id       Int
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  reviews        Review[]
+  cart_items    Cart_item[]
+  productPromotions Product_Promotion[]
+  attributes    Product_attribute[]
+  order_items    Order_item[]
+  images        ImageProduct[]
+
+  brand       Brand       @relation(fields: [brand_id], references: [brand_id])
+  category    Categories  @relation(fields: [category_id], references: [categories_id])
+
+}
+
+model ImageProduct {
+  image_id   Int    @id @default(autoincrement())
+  product_id Int
+  image_url  String
+
+  product Product @relation(fields: [product_id], references: [product_id])
+}
+
+model Brand {
+  brand_id    Int    @id @default(autoincrement())
+  brand_name  String
+  description String
+  logo        String
+
+  products Product[]
+}
+
+model Categories {
+  categories_id Int    @id @default(autoincrement())
+  name          String
+  description   String
+
+  products Product[]
+  categoriesPromotions Categories_Promotion[]
+}
+
+model Product_attribute {
+  attribute_id     Int    @id @default(autoincrement())
+  attribute_name   String
+  attribute_value  String
+  additional_price Float
+  stock_quantity   Int
+  product_id       Int
+
+  product     Product @relation(fields: [product_id], references: [product_id])
+}
+
+model Promotion {
+  promotion_id  Int    @id @default(autoincrement())
+  order_id      Int
+  name          String
+  description   String
+  discount      Float
+  start_date    DateTime
+  end_date      DateTime
+  orders      Order[]
+  productPromotions Product_Promotion[]
+  categoriesPromotions Categories_Promotion[]
+}
+
+model Product_Promotion {
+  promotion_id Int
+  product_id   Int
+
+  promotion Promotion @relation(fields: [promotion_id], references: [promotion_id])
+  product   Product   @relation(fields: [product_id], references: [product_id])
+
+  @@id([promotion_id, product_id])
+}
+
+model Categories_Promotion {
+  promotion_id Int
+  categories_id Int
+
+  promotion Promotion @relation(fields: [promotion_id], references: [promotion_id])
+  category Categories @relation(fields: [categories_id], references: [categories_id])
+
+  @@id([promotion_id, categories_id])
+}
+
+model Order {
+  order_id         Int         @id @default(autoincrement())
+  user_id          Int
+  promotion_id     Int?
+  payment_id       Int?        @unique
+  order_date       DateTime    @default(now())
+  total_amount     Float
+  status           String
+  shipping_address String
+  payment_method   String
+  created_at       DateTime    @default(now())
+ 
+  user       User       @relation(fields: [user_id], references: [user_id])
+  promotion  Promotion?  @relation(fields: [promotion_id], references: [promotion_id])
+  payment    Payment?    @relation("OrderToPayment", fields: [payment_id], references: [payment_id])
+  items      Order_item[]
+}
+
+model Order_item {
+  order_item_id Int  @id @default(autoincrement())
+  order_id      Int
+  product_id    Int
+  quantity      Int
+  unit_price    Float
+
+  order   Order   @relation(fields: [order_id], references: [order_id])
+  product Product @relation(fields: [product_id], references: [product_id])
+}
+
+model Payment {
+  payment_id     Int      @id @default(autoincrement())
+  user_id        Int
+  order_id       Int      @unique
+  amount         Float
+  payment_method String
+  payment_status String
+  payment_date   DateTime @default(now())
+
+  order  Order?  @relation("OrderToPayment")
+  user  User  @relation(fields: [user_id], references: [user_id])
+}
+
+model Cart {
+  cart_id    Int      @id @default(autoincrement())
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user    User    @relation(fields: [user_id], references: [user_id])
+  cart_items Cart_item[]
+}
+
+model Cart_item {
+  cart_id    Int
+  product_id Int
+  quantity   Int
+
+  cart    Cart    @relation(fields: [cart_id], references: [cart_id])
+  product Product @relation(fields: [product_id], references: [product_id])
+
+  @@id([cart_id, product_id])
+}
+
+model Review {
+  review_id  Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  rating     Int
+  comment    String?
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [user_id])
+  product Product @relation(fields: [product_id], references: [product_id])
+}

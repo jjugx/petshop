@@ -1,103 +1,117 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gray-100">
+      {/* Navbar */}
+      <nav className="bg-white p-4 flex justify-between items-center shadow-md">
+        <div className="flex items-center space-x-12 ml-4">
+          {/* Logo */}
+          <Link href="/" className="text-2xl font-bold text-black">
+            Pet Shop
+          </Link>
+    
+          {/* Menu */}
+          <div className="space-x-8 flex items-center">
+            <div className="relative group">
+              <div className="flex items-center text-gray-600 hover:text-black cursor-pointer">
+                <button className="mr-1">สินค้า</button>
+                <svg
+                  className="w-4 h-4 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div className="absolute left-0  w-40 bg-white shadow-md rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200 z-10">
+                <Link href="/product/dog-food" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อาหารสุนัข
+                </Link>
+                <Link href="/product/cat-food" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อาหารแมว
+                </Link>
+                <Link href="/product/smallpets" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อาหารสัตว์เล็ก
+                </Link>
+                <Link href="/product/accessory-dog" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อุปกรณ์สำหรับสุนัข
+                </Link>
+                <Link href="/product/accessory-cat" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อุปกรณ์สำหรับแมว
+                </Link>
+                <Link href="/product/accessory-smallpets" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  อุปกรณ์สำหรับสัตว์เล็ก
+                </Link>
+                <Link href="/product/toys" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  ของเล่นสัตว์เลี้ยง
+                </Link>
+                <Link href="/product/health" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  ผลิตภัณฑ์ดูแลสุขภาพ
+                </Link>
+                <Link href="/product/cleaning" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  ผลิตภัณฑ์ความสะอาดและดูแลขน
+                </Link>
+              </div>
+            </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <Link href="/service" className="text-gray-600 hover:text-black">
+              บริการของเรา
+            </Link>
+            <Link href="/articles" className="text-gray-600 hover:text-black">
+              บทความ
+            </Link>
+            <Link href="/brands" className="text-gray-600 hover:text-black">
+              แบรนด์
+            </Link>
+            <Link href="/contactus" className="text-gray-600 hover:text-black">
+              ติดต่อเรา
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        {/* Search Bar */}
+        <div className="flex items-center space-x-4 w-86 relative ">
+          <svg
+            className="absolute left-3 w-5 h-5 text-gray-400 pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1110 2.5a7.5 7.5 0 016.65 14.15z"
+            />
+          </svg>
+          <input
+            type="text"
+            placeholder="ค้นหาสินค้า"
+            className="pl-10 pr-4 py-2 w-full border rounded-full focus:outline-none focus:ring focus:border-blue-300"
+            aria-label="Search"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            {/* Cart and Profile Icons */}
+          <div className='flex items-center space-x-4 ml-4 '>
+            <Link href="/cart">
+              <svg className="w-6 h-6 text-gray-600 hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </Link>
+            <Link href="/profile">
+              <svg className="w-6 h-6 text-gray-600 hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </nav>
     </div>
   );
 }
